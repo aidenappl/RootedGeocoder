@@ -37,6 +37,10 @@ func main() {
 		Join("website.organisation_locations ol ON ol.organisation_id = o.id").
 		Where(sq.Eq{"ol.lat": nil}).
 		Where(sq.Eq{"ol.lng": nil}).
+		Where(sq.NotEq{"ol.address_line_1": ""}).
+		Where(sq.NotEq{"ol.city": ""}).
+		Where(sq.NotEq{"ol.state": ""}).
+		Where(sq.NotEq{"ol.zip_code": ""}).
 		ToSql()
 	if err != nil {
 		log.Fatal("Failed to build SQL query:", err)
@@ -90,6 +94,11 @@ func main() {
 			Join("website.organisation_locations ol ON ol.organisation_id = o.id").
 			Where(sq.Eq{"ol.lat": nil}).
 			Where(sq.Eq{"ol.lng": nil}).
+			Where(sq.NotEq{"ol.address_line_1": ""}).
+			Where(sq.NotEq{"ol.city": ""}).
+			Where(sq.NotEq{"ol.state": ""}).
+			Where(sq.NotEq{"ol.zip_code": ""}).
+			OrderBy("o.id").
 			Limit(uint64(limit)).
 			Offset(uint64(offset)).
 			ToSql()
